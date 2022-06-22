@@ -13,7 +13,7 @@ const {sequelize} = require('./models');
 const passportConfig = require('./passport');
 
 const app = express();
-sequelize.sync();
+// sequelize.sync();
 passportConfig(passport);
 
 app.set('views', path.join(__dirname, 'views'));
