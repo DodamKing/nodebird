@@ -1,11 +1,11 @@
 const kakaoStrategy = require('passport-kakao').Strategy;
 const { User } = require('../models');
 
-// 아직 env 파일에 카카오 아이디 없어서 에러 나는게 맞음
 module.exports = (passport) => {
     passport.use(new kakaoStrategy({
         clientID : process.env.KAKAO_ID,
-        callbackURL : 'auth/kakao/callback'
+        // callbackURL : 'auth/kakao/callback'
+        callbackURL : 'http://127.0.0.1:9090/auth/kakao/callback'
     }, async (accessToken, refreshToken, profile, done) => {
         try {
             const exUser = await User.findOne({where : {snsId : profile.id, provider : 'kakao'}});
@@ -14,7 +14,7 @@ module.exports = (passport) => {
             }
             else {
                 const newUser = await User.create({
-                    email : profile._json && profile._json.kaccount_email,
+                    email : profile._json && profile._json.account_email,
                     nick : profile.displayName,
                     snsId : profile.id,
                     provider : 'kakao'
