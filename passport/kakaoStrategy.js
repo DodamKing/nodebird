@@ -10,6 +10,10 @@ module.exports = (passport) => {
         try {
             const exUser = await User.findOne({where : {snsId : profile.id, provider : 'kakao'}});
             if (exUser) {
+                await User.update({
+                    email : profile._json && profile._json.account_email,
+                    nick : profile.displayName
+                }, {where : {snsId : profile.id}});
                 done(null, exUser);
             }
             else {
