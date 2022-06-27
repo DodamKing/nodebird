@@ -4,6 +4,7 @@ const path = require('path');
 const fs = require('fs');
 const { isLoggedIn } = require('./middlewares');
 const { Post, Hashtag, User } = require('../models');
+const { escape } = require('mysql2');
 
 const router = express.Router();
 fs.readdir('uploads', (error) => {
