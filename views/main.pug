@@ -26,8 +26,8 @@ block content
           -const follow = user && user.Followings.map(f => f.id).includes(twit.user.id);
           if user && user.id !== twit.user.id && !follow
             button.twit-follow 팔로우하기
-          //- .twit-content= twit.content
-          .twit-content= twit.content.replace(/\r\n*/g, `<br>`)
+          .twit-content= twit.content
+          //- .twit-content= twit.content.replace(/\r\n*/g, `<br>`)
           if twit.img
             .twit-img
               img(src=twit.img alt='섬네일')
