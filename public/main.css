@@ -98,6 +98,7 @@ input[type='text'], input[type='email'], input[type='password'], textarea {
   color: crimson;
   font-size: 12px;
   cursor: pointer;
+  /* margin-left: 10px; */
 }
 .twit-img { text-align: center; }
 .twit-img img { max-width: 75%; }
@@ -106,3 +107,5 @@ input[type='text'], input[type='email'], input[type='password'], textarea {
 #join-form { padding: 10px; text-align: center; }
 #hashtag-form { text-align: right; }
 footer { text-align: center; }
+
+.unfol-btn { margin-left: 10px;}

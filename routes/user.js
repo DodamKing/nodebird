@@ -14,4 +14,8 @@ router.post('/:id/follow', isLoggedIn, async (req, res, next) => {
     }
 });
 
+router.post('/:id/unfol', isLoggedIn, async (req, res, next) => {
+    
+});
+
 module.exports = router;
