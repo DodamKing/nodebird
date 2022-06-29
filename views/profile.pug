@@ -6,33 +6,35 @@ block content
       h2 팔로잉 목록
       if user.Followings
         for following in user.Followings
-          input#temp.twit-user-id(type='hidden' value=following.id)
-          div= following.nick
+          div
+            input.user-id.twit-user-id(type='hidden' value=following.id)
+            div(style='display : inline-block;')= following.nick
             button.twit-follow.unfol-btn 언팔로우
     .followers.half
       h2 팔로워 목록
       if user.Followers
         for follower in user.Followers
-          div= follower.nick
+          div
+            div= follower.nick
 
   script.
     document.querySelectorAll('.unfol-btn').forEach(function (tag) {
       tag.addEventListener('click', function () {
-        var isLoggedIn = document.querySelector('#my-id');
-        if (isLoggedIn) {
-          if (confirm('진심 언팔 할꺼?')) {
-            var userId = document.querySelector('#temp').value;
-            var xhr = new XMLHttpRequest();
-            xhr.onload = function () {
-              if (xhr.status === 200) {
-                location.reload();
-              } else {
-                console.error(xhr.responseText);
-              }
-            };
-            xhr.open('POST', '/user/' + userId + '/unfol');
-            xhr.send();
-          }
+        console.log(tag.parentNode.querySelector('.user-id').value);
+        if (confirm('진심 언팔 할꺼?')) {
+          var userId = tag.parentNode.querySelector('.user-id').value;
+          var xhr = new XMLHttpRequest();
+          xhr.onload = function () {
+            if (xhr.status === 200) {
+              location.reload();
+            } else {
+              console.error(xhr.responseText);
+            }
+          };
+          //- xhr.open('POST', '/user/' + userId + '/unfol');
+          //- xhr.open('POST', `/user/${userId}/unfol`);
+          xhr.open('POST', `/user/unfol?id=${userId}`);
+          xhr.send();
         }
       });
     });
