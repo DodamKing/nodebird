@@ -6,37 +6,62 @@ block content
         form#join-form
             .input-group
                 label(for='nick') 닉네임 : 
-                input#nick(placeholder = user.nick style = 'border:none;')
+                input#nick(value = user.nick style = 'border:none;')
             .input-group 
                 label 이메일 : 
-                input#email(placeholder = user.email style = 'border:none;')
+                input#email(value = user.email style = 'border:none;')
             button#up_btn.btn(type='button') 수정
 
     script.
-        let nick_ = '#{user.nick}';
-        let email_ = `#{user.email}`;
-
         const nick_v = document.querySelector('#nick');
         const email_v = document.querySelector('#email');
         const up_btn = document.querySelector('#up_btn');
 
+        let nick = nick_v.value;
+        let email = email_v.value;
+
         nick_v.addEventListener('change', (e) => {
-            nick_ = nick_v.value;
+            nick = nick_v.value;
+            console.log(nick_);
         });
         
         email_v.addEventListener('change', (e) => {
-            email_ = email_v.value;
+            email = email_v.value;
+            console.log(email_);
         });
 
         up_btn.addEventListener('click', (e) => {
-            let data = {
-                'nick' : nick_,
-                'email' : email_
-            };
-            data = JSON.stringify(data);
+            if(confirm('정보를 수정 하시겠습니까?')) {
+                let data = {
+                    'nick' : nick,
+                    'email' : email
+                };
+                data = JSON.stringify(data);
 
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', '/user/profile_update');
-            xhr.setRequestHeader('Content-Type', "application/json");
-            xhr.send(data);
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', '/user/profile_update');
+                xhr.setRequestHeader('Content-Type', "application/json");
+
+                //- xhr.onreadystatechange = () => {
+                //-     if (xhr.readyState === xhr.DONE) {
+                //-         if (xhr.status === 200) {
+                //-             location.reload();
+                //-         }
+                //-         else {
+                //-             console.error(xhr.responseText);
+                //-         }
+                //-     }
+                //- };
+
+                xhr.onload = () => {
+                    if (xhr.status === 200) {
+                        location.reload();
+                    }
+                    else {
+                        console.error(xhr.responseText);
+                    }
+                };
+
+                xhr.send(data);
+            }
         });

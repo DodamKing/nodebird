@@ -42,7 +42,7 @@ router.post('/unfol', isLoggedIn, async (req, res, next) => {
     }
 });
 
-router.post('/profile_update', isLoggedIn, async (req, res) => {
+router.post('/profile_update', isLoggedIn, async(req, res) => {
     const idx = req.session.passport.user;
     const nick = req.body.nick;
     const email = req.body.email;
@@ -51,9 +51,9 @@ router.post('/profile_update', isLoggedIn, async (req, res) => {
     console.log(`nick : ${nick}`);
     console.log(`email : ${email}`);
 
-    await User.update({email : email}, {nick : nick}, {where : {id : idx}});
+    await User.update({email : email, nick : nick}, {where : {id : idx}});
 
-    res.send();
+    res.send(200);
 });
 
 module.exports = router;
