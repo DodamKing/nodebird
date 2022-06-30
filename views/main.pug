@@ -26,6 +26,8 @@ block content
           -const follow = user && user.Followings.map(f => f.id).includes(twit.user.id);
           if user && user.id !== twit.user.id && !follow
             button.twit-follow 팔로우하기
+          if user.id === twit.user.id
+            button#del_btn.twit-follow(type='button') 삭제
           pre.twit-content= twit.content 
           //- 프리태그로 해결
           if twit.img
@@ -74,4 +76,10 @@ block content
           }
         }
       });
+    });
+
+    const del_btn = document.querySelector('#del_btn').addEventListener('click', () => {
+      if (confirm('해당 게시글을 삭제 하시겠습니까?')) {
+        alert('hello');
+      }
     });
