@@ -1,0 +1,42 @@
+extends layout
+
+block content
+    .timeline 
+        h3 정보
+        form#join-form
+            .input-group
+                label(for='nick') 닉네임 : 
+                input#nick(placeholder = user.nick style = 'border:none;')
+            .input-group 
+                label 이메일 : 
+                input#email(placeholder = user.email style = 'border:none;')
+            button#up_btn.btn(type='button') 수정
+
+    script.
+        let nick_ = '#{user.nick}';
+        let email_ = `#{user.email}`;
+
+        const nick_v = document.querySelector('#nick');
+        const email_v = document.querySelector('#email');
+        const up_btn = document.querySelector('#up_btn');
+
+        nick_v.addEventListener('change', (e) => {
+            nick_ = nick_v.value;
+        });
+        
+        email_v.addEventListener('change', (e) => {
+            email_ = email_v.value;
+        });
+
+        up_btn.addEventListener('click', (e) => {
+            let data = {
+                'nick' : nick_,
+                'email' : email_
+            };
+            data = JSON.stringify(data);
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/user/profile_update');
+            xhr.setRequestHeader('Content-Type', "application/json");
+            xhr.send(data);
+        });

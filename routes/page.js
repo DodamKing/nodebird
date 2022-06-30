@@ -9,11 +9,16 @@ router.get('/profile', isLoggedIn, (req, res) => {
 });
 
 router.get('/join', isNotLoggedIn, (req, res) => {
+    console.log(req.user);
     res.render('join', {
         title : '회원가입 - NodeBird',
         user : req.user,
         joinError : req.flash('joinError')
     });
+});
+
+router.get('/profile_update', isLoggedIn, (req, res) => {
+    res.render('profile_update', {user : req.user});
 });
 
 router.get('/', (req, res, next) => {
