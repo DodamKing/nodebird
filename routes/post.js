@@ -79,4 +79,10 @@ router.get('/hashtag', async (req, res, next) => {
     }
 });
 
+router.post('/update', async(req, res) => {
+    const idx = req.query.idx;
+    await Post.destroy({where : {id : idx}});
+    res.send(200);
+});
+
 module.exports = router;

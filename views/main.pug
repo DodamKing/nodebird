@@ -26,8 +26,8 @@ block content
           -const follow = user && user.Followings.map(f => f.id).includes(twit.user.id);
           if user && user.id !== twit.user.id && !follow
             button.twit-follow 팔로우하기
-          if user.id === twit.user.id
-            button#del_btn.twit-follow(type='button') 삭제
+          if user && user.id === twit.user.id
+            button.twit-follow.del_btn(type='button') 삭제
           pre.twit-content= twit.content 
           //- 프리태그로 해결
           if twit.img
@@ -78,8 +78,23 @@ block content
       });
     });
 
-    const del_btn = document.querySelector('#del_btn').addEventListener('click', () => {
+    let del_btn = document.querySelectorAll('.del_btn');
+    del_btn.forEach((i) => i.addEventListener('click', () => {
       if (confirm('해당 게시글을 삭제 하시겠습니까?')) {
-        alert('hello');
+        const idx = i.parentNode.querySelector('.twit-id').value;
+        const xhr = new XMLHttpRequest();
+
+        xhr.onload = () => {
+          if (xhr.status === 200) {
+            location.reload();
+          }
+          else {
+            console.error(xhr.responseText);
+          }
+        };
+
+        xhr.open('POST', '/post/update?idx=' + idx);
+        xhr.send();
       }
-    });
+    }));
+    
